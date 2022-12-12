@@ -22,18 +22,39 @@ var __importStar = (this && this.__importStar) || function (mod) {
     __setModuleDefault(result, mod);
     return result;
 };
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 const react_1 = __importStar(require("react"));
+const axios_1 = __importDefault(require("axios"));
 require("./App.css");
 function App() {
-    const [data, setData] = (0, react_1.useState)(null);
+    const [data, setData] = (0, react_1.useState)([]);
+    const getData = () => __awaiter(this, void 0, void 0, function* () {
+        const res = yield axios_1.default.get("/posts");
+        console.log(res.data);
+        setData(res.data);
+    });
+    // useEffect(() => {
+    //   fetch("/api")
+    //     .then((res: Response) => res.json())
+    //     .then((data) => setData(data.message));
+    // }, []);
     (0, react_1.useEffect)(() => {
-        fetch("/api")
-            .then((res) => res.json())
-            .then((data) => setData(data.message));
+        getData();
     }, []);
     return (react_1.default.createElement("div", { className: "App" },
         react_1.default.createElement("header", { className: "App-header" },
-            react_1.default.createElement("p", null, !data ? "Loading..." : data))));
+            react_1.default.createElement("div", null, !data ? (react_1.default.createElement("p", null, "\"Loading...\"")) : (data.map((post) => react_1.default.createElement("p", { key: post._id }, post.postTitle)))))));
 }
 exports.default = App;

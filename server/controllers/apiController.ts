@@ -41,4 +41,32 @@ module.exports = (app: Express) => {
       res.status(500).send(err);
     }
   });
+
+  app.post("/posts", async (req: Request, res: Response) => {
+    try {
+      const post = new Post(req.body);
+      await post.save();
+      res.send(post);
+    } catch (err) {
+      res.send(err);
+    }
+  });
+
+  app.put("/posts/:id", async (req: Request, res: Response) => {
+    try {
+      const post = await Post.findByIdAndUpdate(req.params.id, req.body);
+      res.send(post);
+    } catch (err) {
+      res.send(err);
+    }
+  });
+
+  app.delete("/posts/:id", async (req: Request, res: Response) => {
+    try {
+      const post = await Post.findByIdAndDelete(req.params.id);
+      res.send("Deleted successfully!");
+    } catch (err) {
+      res.send(err);
+    }
+  });
 };

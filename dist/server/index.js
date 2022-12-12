@@ -6,6 +6,7 @@ const cors = require("cors");
 const mongoose = require("mongoose");
 const apiController = require("./controllers/apiController");
 app.use(cors());
+app.use(express.json());
 require("dotenv").config({ path: "./server/config.env" });
 const PORT = process.env.PORT || 3002;
 mongoose

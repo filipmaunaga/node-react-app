@@ -50,4 +50,32 @@ module.exports = (app) => {
             res.status(500).send(err);
         }
     }));
+    app.post("/posts", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+        try {
+            const post = new Post(req.body);
+            yield post.save();
+            res.send(post);
+        }
+        catch (err) {
+            res.send(err);
+        }
+    }));
+    app.put("/posts/:id", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+        try {
+            const post = yield Post.findByIdAndUpdate(req.params.id, req.body);
+            res.send(post);
+        }
+        catch (err) {
+            res.send(err);
+        }
+    }));
+    app.delete("/posts/:id", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+        try {
+            const post = yield Post.findByIdAndDelete(req.params.id);
+            res.send("Deleted successfully!");
+        }
+        catch (err) {
+            res.send(err);
+        }
+    }));
 };
