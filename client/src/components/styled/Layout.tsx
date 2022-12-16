@@ -1,5 +1,5 @@
 import React from "react";
-import { AppBar } from "@mui/material";
+import { AppBar, Box } from "@mui/material";
 import { styled } from "@mui/material";
 
 export const StyledHeader = styled(AppBar)(({ theme }) => ({
@@ -9,7 +9,7 @@ export const StyledHeader = styled(AppBar)(({ theme }) => ({
   flexDirection: "row",
 }));
 
-export const StyledMenuItemContainer = styled("div")(() => ({
+export const StyledMenuItemContainer = styled(Box)(() => ({
   display: "flex",
   padding: "0.5rem 0",
   margin: "0 0.5rem",
