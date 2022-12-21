@@ -43,6 +43,7 @@ const Compose = () => {
     const [postData, setPostData] = (0, react_1.useState)({
         title: "",
         content: "",
+        numberOfLikes: 0,
     });
     const handleSubmit = (e) => __awaiter(void 0, void 0, void 0, function* () {
         e.preventDefault();
@@ -51,6 +52,7 @@ const Compose = () => {
             const data = {
                 postTitle: postData.title,
                 postBody: postData.content,
+                numberOfLikes: postData.numberOfLikes,
             };
             const res = yield axios_1.default.post("/posts", data);
             console.log(res.data);

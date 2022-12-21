@@ -28,8 +28,39 @@ const Posts = () => {
     (0, react_2.useEffect)(() => {
         getData();
     }, []);
+    const handlePlusOne = (postId, data) => __awaiter(void 0, void 0, void 0, function* () {
+        try {
+            const res = yield axios_1.default.put(`/posts/${postId}`, data);
+            getData();
+            console.log(res.data);
+        }
+        catch (error) {
+            console.log(error);
+        }
+    });
+    const handleMinusOne = (postId, data) => __awaiter(void 0, void 0, void 0, function* () {
+        try {
+            const res = yield axios_1.default.put(`/posts/${postId}`, data);
+            getData();
+            console.log(res.data);
+        }
+        catch (error) {
+            console.log(error);
+        }
+    });
     return (react_1.default.createElement("div", null, !data ? (react_1.default.createElement("p", null, "\"Loading...\"")) : (data.map((post) => (react_1.default.createElement(Post_1.StyledCard, { key: post._id },
         react_1.default.createElement(CardContent_1.default, null,
+            react_1.default.createElement("p", null, post.numberOfLikes),
+            react_1.default.createElement("div", { onClick: () => {
+                    handlePlusOne(post._id, {
+                        numberOfLikes: post.numberOfLikes + 1,
+                    });
+                } }, "+1"),
+            react_1.default.createElement("div", { onClick: () => {
+                    handleMinusOne(post._id, {
+                        numberOfLikes: post.numberOfLikes - 1,
+                    });
+                } }, "-1"),
             react_1.default.createElement(material_1.Typography, { variant: "h3", gutterBottom: true }, post.postTitle),
             react_1.default.createElement(material_1.Typography, { variant: "h6" }, post.postBody))))))));
 };

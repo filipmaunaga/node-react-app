@@ -23,7 +23,10 @@ const Header = (): JSX.Element => {
     <StyledHeader>
       <div>Logo</div>
       {menuItems.map((item) => (
-        <StyledMenuItemContainer onClick={() => redirect(item.itemPath)}>
+        <StyledMenuItemContainer
+          key={item.itemName}
+          onClick={() => redirect(item.itemPath)}
+        >
           <p>{item.itemName}</p>
         </StyledMenuItemContainer>
       ))}

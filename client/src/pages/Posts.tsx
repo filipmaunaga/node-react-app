@@ -18,6 +18,32 @@ const Posts = (): JSX.Element => {
     getData();
   }, []);
 
+  const handlePlusOne = async (
+    postId: string,
+    data: { numberOfLikes: number }
+  ) => {
+    try {
+      const res = await axios.put(`/posts/${postId}`, data);
+      getData();
+      console.log(res.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const handleMinusOne = async (
+    postId: string,
+    data: { numberOfLikes: number }
+  ) => {
+    try {
+      const res = await axios.put(`/posts/${postId}`, data);
+      getData();
+      console.log(res.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <div>
       {!data ? (
@@ -26,6 +52,26 @@ const Posts = (): JSX.Element => {
         data.map((post) => (
           <StyledCard key={post._id}>
             <CardContent>
+              <p>{post.numberOfLikes}</p>
+              <div
+                onClick={() => {
+                  handlePlusOne(post._id, {
+                    numberOfLikes: post.numberOfLikes + 1,
+                  });
+                }}
+              >
+                +1
+              </div>
+              <div
+                onClick={() => {
+                  handleMinusOne(post._id, {
+                    numberOfLikes: post.numberOfLikes - 1,
+                  });
+                }}
+              >
+                -1
+              </div>
+              {/* <div onClick={() => handleMinusOne(post._id, {numberOfLikes: post.numberOfLikes})}>-1</div> */}
               <Typography variant="h3" gutterBottom>
                 {post.postTitle}
               </Typography>

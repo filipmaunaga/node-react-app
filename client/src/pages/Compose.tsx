@@ -14,6 +14,7 @@ const Compose = (): JSX.Element => {
   const [postData, setPostData] = useState<IPost>({
     title: "",
     content: "",
+    numberOfLikes: 0,
   });
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -23,6 +24,7 @@ const Compose = (): JSX.Element => {
       const data = {
         postTitle: postData.title,
         postBody: postData.content,
+        numberOfLikes: postData.numberOfLikes,
       };
       const res = await axios.post("/posts", data);
       console.log(res.data);

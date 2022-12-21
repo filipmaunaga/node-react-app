@@ -43,7 +43,7 @@ const Header = () => {
     };
     return (React.createElement(Layout_1.StyledHeader, null,
         React.createElement("div", null, "Logo"),
-        menuItems.map((item) => (React.createElement(Layout_1.StyledMenuItemContainer, { onClick: () => redirect(item.itemPath) },
+        menuItems.map((item) => (React.createElement(Layout_1.StyledMenuItemContainer, { key: item.itemName, onClick: () => redirect(item.itemPath) },
             React.createElement("p", null, item.itemName))))));
 };
 exports.default = Header;
