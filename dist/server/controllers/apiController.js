@@ -11,43 +11,23 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 const Post = require("../models/postModel");
 module.exports = (app) => {
-    app.get("/insert-initial-data", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-        try {
-            const starterPosts = [
-                {
-                    postTitle: "First post",
-                    postBody: "Adding some seed data",
-                },
-                {
-                    postTitle: "Second post",
-                    postBody: "More seed data",
-                },
-                {
-                    postTitle: "Third post",
-                    postBody: "Bit more",
-                },
-            ];
-            Post.insertMany(starterPosts, (err) => {
-                if (err) {
-                    console.log(err);
-                }
-                else {
-                    console.log("Successfully added posts to the collection");
-                }
-            });
-            res.send("Initialized data");
-        }
-        catch (err) {
-            res.send(err);
-        }
-    }));
     app.get("/posts", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         try {
             const posts = yield Post.find();
+            posts.sort((a, b) => b.numberOfLikes - a.numberOfLikes);
             res.send(posts);
         }
         catch (err) {
             res.status(500).send(err);
+        }
+    }));
+    app.get("/posts/:id", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+        try {
+            const post = yield Post.findById(req.params.id);
+            res.send(post);
+        }
+        catch (err) {
+            res.send(err);
         }
     }));
     app.post("/posts", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
