@@ -11,7 +11,6 @@ const SinglePost = ({ post, handlePlusOne, handleMinusOne }: ISinglePost) => {
     try {
       const res = await axios.get(`/posts/${postId}`);
       const updatedPost = res.data;
-
       setSinglePost({
         id: updatedPost._id,
         title: updatedPost.postTitle,
@@ -28,21 +27,20 @@ const SinglePost = ({ post, handlePlusOne, handleMinusOne }: ISinglePost) => {
       <CardContent>
         <p>{singlePost.numberOfLikes}</p>
         <div
-          onClick={() => {
+          onClick={async () => {
             if (!handlePlusOne) return;
-            handlePlusOne(singlePost.id as string, {
+            await handlePlusOne(singlePost.id as string, {
               numberOfLikes: singlePost.numberOfLikes + 1,
             });
-            console.log("payload", singlePost);
             getSinglePost(singlePost.id as string);
           }}
         >
           +1
         </div>
         <div
-          onClick={() => {
+          onClick={async () => {
             if (!handleMinusOne) return;
-            handleMinusOne(singlePost.id as string, {
+            await handleMinusOne(singlePost.id as string, {
               numberOfLikes: singlePost.numberOfLikes - 1,
             });
 

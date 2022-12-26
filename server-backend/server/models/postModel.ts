@@ -1,6 +1,6 @@
 import { Schema, model, connect } from "mongoose";
 
-interface IPost {
+export interface IPost {
   postTitle: string;
   postBody: string;
   numberOfLikes: number;
