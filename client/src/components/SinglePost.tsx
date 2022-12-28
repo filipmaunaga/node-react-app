@@ -3,11 +3,12 @@ import { CardContent, Typography } from "@mui/material";
 import { IPost, ISinglePost } from "../pages/models/PostModel";
 import { StyledCard } from "../pages/styled/Post";
 import axios from "axios";
+import { Link } from "react-router-dom";
 
 const SinglePost = ({ post, handlePlusOne, handleMinusOne }: ISinglePost) => {
   const [singlePost, setSinglePost] = useState<IPost>(post);
 
-  const getSinglePost = async (postId: string) => {
+  const updateSinglePost = async (postId: string) => {
     try {
       const res = await axios.get(`/posts/${postId}`);
       const updatedPost = res.data;
@@ -32,7 +33,7 @@ const SinglePost = ({ post, handlePlusOne, handleMinusOne }: ISinglePost) => {
             await handlePlusOne(singlePost.id as string, {
               numberOfLikes: singlePost.numberOfLikes + 1,
             });
-            getSinglePost(singlePost.id as string);
+            updateSinglePost(singlePost.id as string);
           }}
         >
           +1
@@ -44,13 +45,13 @@ const SinglePost = ({ post, handlePlusOne, handleMinusOne }: ISinglePost) => {
               numberOfLikes: singlePost.numberOfLikes - 1,
             });
 
-            getSinglePost(singlePost.id as string);
+            updateSinglePost(singlePost.id as string);
           }}
         >
           -1
         </div>
         <Typography variant="h3" gutterBottom>
-          {singlePost.title}
+          <Link to={`/posts/${singlePost.id}`}>{singlePost.title}</Link>
         </Typography>
         <Typography variant="h6">{singlePost.content}</Typography>
       </CardContent>
