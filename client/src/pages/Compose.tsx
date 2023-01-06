@@ -11,10 +11,18 @@ import {
 import { IPost } from "./models/PostModel";
 
 const Compose = (): JSX.Element => {
+  const options: Intl.DateTimeFormatOptions = {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  };
+  const postDate = new Date().toLocaleDateString("en-US", options);
+
   const [postData, setPostData] = useState<IPost>({
     title: "",
     content: "",
     numberOfLikes: 0,
+    date: postDate,
   });
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -25,6 +33,7 @@ const Compose = (): JSX.Element => {
         postTitle: postData.title,
         postBody: postData.content,
         numberOfLikes: postData.numberOfLikes,
+        postDate: postData.date,
       };
       const res = await axios.post("/posts", data);
       console.log(res.data);

@@ -52,6 +52,7 @@ const PostDetails = (): JSX.Element => {
             {data.postTitle}
           </Typography>
           <Typography variant="h6">{data.postBody}</Typography>
+          <p>{data.postDate}</p>
         </CardContent>
       </StyledCard>
     </div>

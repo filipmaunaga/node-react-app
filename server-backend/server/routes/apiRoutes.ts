@@ -7,6 +7,7 @@ const {
   createNewPost,
   updatePost,
   deletePost,
+  deleteAll,
 } = require("../controllers/apiController");
 
 module.exports = (app: Express) => {

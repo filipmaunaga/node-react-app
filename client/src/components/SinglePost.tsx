@@ -17,6 +17,7 @@ const SinglePost = ({ post, handlePlusOne, handleMinusOne }: ISinglePost) => {
         title: updatedPost.postTitle,
         content: updatedPost.postBody,
         numberOfLikes: updatedPost.numberOfLikes,
+        date: updatedPost.postDate,
       });
     } catch (error) {
       console.log(error);
@@ -54,6 +55,7 @@ const SinglePost = ({ post, handlePlusOne, handleMinusOne }: ISinglePost) => {
           <Link to={`/posts/${singlePost.id}`}>{singlePost.title}</Link>
         </Typography>
         <Typography variant="h6">{singlePost.content}</Typography>
+        <p>{singlePost.date}</p>
       </CardContent>
     </StyledCard>
   );

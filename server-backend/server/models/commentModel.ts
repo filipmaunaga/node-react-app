@@ -12,4 +12,4 @@ const postSchema = new Schema<IComment>({
 
 const Post = model<IComment>("Post", postSchema);
 
-module.exports = Post;
+module.exports = Comment;

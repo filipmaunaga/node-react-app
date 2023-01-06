@@ -3,6 +3,7 @@ export interface IPost {
   title: string;
   content: string;
   numberOfLikes: number;
+  date: string;
 }
 
 export interface ISinglePost {

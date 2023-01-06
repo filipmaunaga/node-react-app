@@ -29,6 +29,7 @@ const Posts = (): JSX.Element => {
               title: post.postTitle,
               content: post.postBody,
               numberOfLikes: post.numberOfLikes,
+              date: post.postDate,
             }}
             handlePlusOne={handlePlusOne}
             handleMinusOne={handleMinusOne}

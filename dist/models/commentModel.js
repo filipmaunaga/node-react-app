@@ -6,4 +6,4 @@ const postSchema = new mongoose_1.Schema({
     numberOfLikes: { type: Number, required: true },
 });
 const Post = (0, mongoose_1.model)("Post", postSchema);
-module.exports = Post;
+module.exports = Comment;
