@@ -1,10 +1,12 @@
 import { Schema, model } from "mongoose";
+import { IComment } from "./commentModel";
 
 export interface IPost {
   postTitle: string;
   postBody: string;
   numberOfLikes: number;
   postDate: string;
+  comments?: IComment[];
 }
 
 const postSchema = new Schema<IPost>({
@@ -12,6 +14,7 @@ const postSchema = new Schema<IPost>({
   postBody: { type: String, required: true },
   numberOfLikes: { type: Number, required: true },
   postDate: { type: String, required: true },
+  comments: { type: Array },
 });
 
 const Post = model<IPost>("Post", postSchema);

@@ -4,10 +4,13 @@ import axios from "axios";
 import { handlePlusOne, handleMinusOne } from "../services/PostServices";
 import { StyledCard } from "./styled/Post";
 import { CardContent, Typography } from "@mui/material";
+import PostComment from "../components/PostComment";
+import { IPostComment } from "./models/PostCommentModel";
 
 const PostDetails = (): JSX.Element => {
   const { id } = useParams();
 
+  //getting post data
   const [data, setData] = useState<any>({});
 
   const getSinglePost = async (postId: string) => {
@@ -17,6 +20,18 @@ const PostDetails = (): JSX.Element => {
 
   useEffect(() => {
     getSinglePost(id as string);
+  }, []);
+
+  //getting comment data
+  const [comments, setComments] = useState<any>([]);
+
+  const getComments = async () => {
+    const res = await axios.get(`/posts/${id}/comments`);
+    setComments(res.data);
+  };
+
+  useEffect(() => {
+    getComments();
   }, []);
 
   return (
@@ -55,6 +70,18 @@ const PostDetails = (): JSX.Element => {
           <p>{data.postDate}</p>
         </CardContent>
       </StyledCard>
+
+      {!comments ? (
+        <p>Loading...</p>
+      ) : (
+        comments.map((comment: any) => (
+          <PostComment
+            commentContent={comment.commentBody}
+            commentNumberOfLikes={comment.commentNumberOfLikes}
+            date={comment.commentDate}
+          />
+        ))
+      )}
     </div>
   );
 };

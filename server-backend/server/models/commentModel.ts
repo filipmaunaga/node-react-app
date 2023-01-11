@@ -2,14 +2,16 @@ import { Schema, model } from "mongoose";
 
 export interface IComment {
   commentBody: string;
-  numberOfLikes: number;
+  commentNumberOfLikes: number;
+  commentDate: string;
 }
 
-const postSchema = new Schema<IComment>({
+const commentSchema = new Schema<IComment>({
   commentBody: { type: String, required: true },
-  numberOfLikes: { type: Number, required: true },
+  commentNumberOfLikes: { type: Number, required: true },
+  commentDate: { type: String, required: true },
 });
 
-const Post = model<IComment>("Post", postSchema);
+const postComment = model<IComment>("Comment", commentSchema);
 
-module.exports = Comment;
+module.exports = postComment;

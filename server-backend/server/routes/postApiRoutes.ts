@@ -1,4 +1,3 @@
-const Post = require("../models/postModel");
 import { Express } from "express";
 
 const {
@@ -7,8 +6,7 @@ const {
   createNewPost,
   updatePost,
   deletePost,
-  deleteAll,
-} = require("../controllers/apiController");
+} = require("../controllers/postApiController");
 
 module.exports = (app: Express) => {
   app.get("/posts", getPosts);

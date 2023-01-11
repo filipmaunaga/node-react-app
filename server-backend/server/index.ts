@@ -3,7 +3,8 @@ const express = require("express");
 const app: Express = express();
 const cors = require("cors");
 const mongoose = require("mongoose");
-const apiRoutes = require("./routes/apiRoutes");
+const postApiRoutes = require("./routes/postApiRoutes");
+const commentApiRoutes = require("./routes/commentApiRoutes");
 
 app.use(cors());
 app.use(express.json());
@@ -17,7 +18,9 @@ mongoose
   })
   .then(() => console.log("db Connected"));
 
-apiRoutes(app);
+postApiRoutes(app);
+
+commentApiRoutes(app);
 
 app.get("/api", (req: Request, res: Response) => {
   res.json({ message: "Hello from server!" });
