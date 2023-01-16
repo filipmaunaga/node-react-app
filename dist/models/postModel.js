@@ -6,7 +6,13 @@ const postSchema = new mongoose_1.Schema({
     postBody: { type: String, required: true },
     numberOfLikes: { type: Number, required: true },
     postDate: { type: String, required: true },
-    comments: { type: Array },
+    comments: [
+        {
+            commentBody: { type: String },
+            commentNumberOfLikes: { type: Number },
+            commentDate: { type: String },
+        },
+    ],
 });
 const Post = (0, mongoose_1.model)("Post", postSchema);
 module.exports = Post;

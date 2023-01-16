@@ -14,7 +14,13 @@ const postSchema = new Schema<IPost>({
   postBody: { type: String, required: true },
   numberOfLikes: { type: Number, required: true },
   postDate: { type: String, required: true },
-  comments: { type: Array },
+  comments: [
+    {
+      commentBody: { type: String },
+      commentNumberOfLikes: { type: Number },
+      commentDate: { type: String },
+    },
+  ],
 });
 
 const Post = model<IPost>("Post", postSchema);

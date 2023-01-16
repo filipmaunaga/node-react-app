@@ -6,6 +6,7 @@ import { StyledCard } from "./styled/Post";
 import { CardContent, Typography } from "@mui/material";
 import PostComment from "../components/PostComment";
 import { IPostComment } from "./models/PostCommentModel";
+import NewComment from "../components/NewComment";
 
 const PostDetails = (): JSX.Element => {
   const { id } = useParams();
@@ -76,12 +77,14 @@ const PostDetails = (): JSX.Element => {
       ) : (
         comments.map((comment: any) => (
           <PostComment
+            key={comment._id}
             commentContent={comment.commentBody}
             commentNumberOfLikes={comment.commentNumberOfLikes}
             date={comment.commentDate}
           />
         ))
       )}
+      <NewComment id={id} />
     </div>
   );
 };
