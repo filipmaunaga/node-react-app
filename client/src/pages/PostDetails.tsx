@@ -1,39 +1,18 @@
-import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
-import axios from "axios";
+import React from "react";
 import { handlePlusOne, handleMinusOne } from "../services/PostServices";
 import { StyledCard } from "./styled/Post";
 import { CardContent, Typography } from "@mui/material";
 import PostComment from "../components/PostComment";
-import { IPostComment } from "./models/PostCommentModel";
 import NewComment from "../components/NewComment";
+import {
+  commentUpVote,
+  commentDownVote,
+  deleteComment,
+} from "../services/CommentServices";
+import useSinglePost from "../hooks/useSinglePost";
 
 const PostDetails = (): JSX.Element => {
-  const { id } = useParams();
-
-  //getting post data
-  const [data, setData] = useState<any>({});
-
-  const getSinglePost = async (postId: string) => {
-    const res = await axios.get(`/posts/${postId}`);
-    setData(res.data);
-  };
-
-  useEffect(() => {
-    getSinglePost(id as string);
-  }, []);
-
-  //getting comment data
-  const [comments, setComments] = useState<any>([]);
-
-  const getComments = async () => {
-    const res = await axios.get(`/posts/${id}/comments`);
-    setComments(res.data);
-  };
-
-  useEffect(() => {
-    getComments();
-  }, []);
+  const [id, data, comments, getSinglePost, getComments] = useSinglePost();
 
   return (
     <div>
@@ -81,6 +60,12 @@ const PostDetails = (): JSX.Element => {
             commentContent={comment.commentBody}
             commentNumberOfLikes={comment.commentNumberOfLikes}
             date={comment.commentDate}
+            commentUpVote={commentUpVote}
+            commentDownVote={commentDownVote}
+            postId={id}
+            commentId={comment._id}
+            getComments={getComments}
+            deleteComment={deleteComment}
           />
         ))
       )}

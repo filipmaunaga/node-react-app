@@ -23,3 +23,11 @@ export const handleMinusOne = async (
     console.log(error);
   }
 };
+
+export const deletePost = async (postId: string) => {
+  try {
+    const res = await axios.delete(`/posts/${postId}`);
+  } catch (error) {
+    console.log(error);
+  }
+};

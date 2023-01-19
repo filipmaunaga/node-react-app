@@ -5,7 +5,12 @@ import { StyledCard } from "../pages/styled/Post";
 import axios from "axios";
 import { Link } from "react-router-dom";
 
-const SinglePost = ({ post, handlePlusOne, handleMinusOne }: ISinglePost) => {
+const SinglePost = ({
+  post,
+  handlePlusOne,
+  handleMinusOne,
+  handleDelete,
+}: ISinglePost) => {
   const [singlePost, setSinglePost] = useState<IPost>(post);
 
   const updateSinglePost = async (postId: string) => {
@@ -57,6 +62,15 @@ const SinglePost = ({ post, handlePlusOne, handleMinusOne }: ISinglePost) => {
         <Typography variant="h6">{singlePost.content}</Typography>
         <p>{singlePost.date}</p>
       </CardContent>
+      <div
+        style={{ color: "red" }}
+        onClick={() => {
+          if (!handleDelete) return;
+          handleDelete(singlePost.id as string);
+        }}
+      >
+        DELETE
+      </div>
     </StyledCard>
   );
 };

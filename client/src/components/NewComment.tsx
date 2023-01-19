@@ -29,7 +29,7 @@ const NewComment = ({ id }: any): JSX.Element => {
         commentNumberOfLikes: newComment.commentNumberOfLikes,
         commentDate: newComment.date,
       };
-      const res = await axios.post(`/posts/${id}/comments`, data);
+      const res = await axios.post(`/comments/${id}`, data);
 
       console.log(res.data);
     } catch (err) {

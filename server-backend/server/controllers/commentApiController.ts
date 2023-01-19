@@ -1,4 +1,3 @@
-const postComment = require("../models/commentModel");
 const Post = require("../models/postModel");
 import { Request, Response } from "express";
 import { IComment } from "../models/commentModel";

@@ -1,20 +1,19 @@
 import React from "react";
-import axios from "axios";
-import { useEffect, useState } from "react";
 import SinglePost from "../components/SinglePost";
-import { handlePlusOne, handleMinusOne } from "../services/PostServices";
+import {
+  handlePlusOne,
+  handleMinusOne,
+  deletePost,
+} from "../services/PostServices";
+import usePosts from "../hooks/usePosts";
 
 const Posts = (): JSX.Element => {
-  const [data, setData] = useState<any[]>([]);
+  const [data, setData, getData] = usePosts();
 
-  const getData = async () => {
-    const res = await axios.get("/posts");
-    setData(res.data);
-  };
-
-  useEffect(() => {
+  const handleDelete = async (postId: string) => {
+    await deletePost(postId);
     getData();
-  }, []);
+  };
 
   return (
     <div>
@@ -33,6 +32,7 @@ const Posts = (): JSX.Element => {
             }}
             handlePlusOne={handlePlusOne}
             handleMinusOne={handleMinusOne}
+            handleDelete={handleDelete}
           />
         ))
       )}

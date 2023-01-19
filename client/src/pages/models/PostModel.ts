@@ -20,4 +20,5 @@ export interface ISinglePost {
       numberOfLikes: number;
     }
   ) => Promise<void>;
+  handleDelete?: (postId: string) => void;
 }
