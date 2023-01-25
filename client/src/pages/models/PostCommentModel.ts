@@ -1,7 +1,10 @@
-export interface IPostComment {
+export interface IPostSingleComment {
   commentContent: string;
   commentNumberOfLikes: number;
   date: string;
+}
+export interface IPostComment {
+  singleComment: IPostSingleComment;
   commentUpVote?: (
     postId: string,
     commentId: string,
@@ -23,5 +26,6 @@ export interface IPostComment {
   postId?: string;
   commentId?: string;
   getComments?: () => Promise<void>;
+  getSingleComment?: (postId: string, commentId: string) => Promise<void>;
   deleteComment?: (postId: string, commentId: string) => Promise<void>;
 }

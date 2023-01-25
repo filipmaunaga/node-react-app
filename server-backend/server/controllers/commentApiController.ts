@@ -19,7 +19,12 @@ const getComments = async (req: Request, res: Response) => {
 
 const getComment = async (req: Request, res: Response) => {
   try {
-    await res.send("comments");
+    const post = await Post.findById(req.params.id);
+    if (!post) return res.status(404).json({ message: "Post not found" });
+    const comment = post.comments.id(req.params.commentId);
+    if (!comment) return res.status(404).json({ message: "Comment not found" });
+    await post.save();
+    res.json(comment);
   } catch (err) {
     res.send(err);
   }
@@ -62,7 +67,9 @@ const deleteComment = async (req: Request, res: Response) => {
     comment.remove();
     await post.save();
     res.json({ message: "Comment deleted successfully" });
-  } catch (err) {}
+  } catch (err) {
+    res.send(err);
+  }
 };
 
 module.exports = {
@@ -70,4 +77,5 @@ module.exports = {
   createNewComment,
   updateComment,
   deleteComment,
+  getComment,
 };

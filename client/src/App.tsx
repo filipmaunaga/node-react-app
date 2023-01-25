@@ -1,15 +1,24 @@
-import React, { useEffect, useState } from "react";
-import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
+import React from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import "./App.css";
 import Header from "./components/Header";
 import Compose from "./pages/Compose";
 import Posts from "./pages/Posts";
-import axios from "axios";
 import PostDetails from "./pages/PostDetails";
 
 function App() {
-  const theme = createTheme({});
+  const theme = createTheme({
+    typography: {
+      h3: {
+        fontFamily: "'Maven Pro', sans-serif",
+        fontWeight: 500,
+      },
+      h6: {
+        fontFamily: "'Montserrat', sans-serif",
+        fontWeight: 400,
+      },
+    },
+  });
 
   return (
     <Router>

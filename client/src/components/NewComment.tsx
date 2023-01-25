@@ -1,7 +1,8 @@
 import { Button } from "@mui/material";
 import axios from "axios";
 import React, { useState } from "react";
-import { IPostComment } from "../pages/models/PostCommentModel";
+import { IPostSingleComment } from "../pages/models/PostCommentModel";
+import { StyledSubmitButton } from "../pages/styled/Form";
 import {
   StyledCommentContent,
   StyledCommentForm,
@@ -16,7 +17,7 @@ const NewComment = ({ id }: any): JSX.Element => {
   };
   const commentDate = new Date().toLocaleDateString("en-US", options);
 
-  const [newComment, setNewComment] = useState<IPostComment>({
+  const [newComment, setNewComment] = useState<IPostSingleComment>({
     commentContent: "",
     commentNumberOfLikes: 0,
     date: commentDate,
@@ -30,8 +31,6 @@ const NewComment = ({ id }: any): JSX.Element => {
         commentDate: newComment.date,
       };
       const res = await axios.post(`/comments/${id}`, data);
-
-      console.log(res.data);
     } catch (err) {
       console.log(err);
     }
@@ -53,9 +52,9 @@ const NewComment = ({ id }: any): JSX.Element => {
             }}
           />
 
-          <Button variant="contained" type="submit">
+          <StyledSubmitButton variant="contained" type="submit">
             Submit
-          </Button>
+          </StyledSubmitButton>
         </form>
       </StyledCommentForm>
     </StyledCommentFormContainer>

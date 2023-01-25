@@ -15,3 +15,14 @@ export const StyledMenuItemContainer = styled(Box)(() => ({
   margin: "0 0.5rem",
   cursor: "pointer",
 }));
+
+export const StyledLogoContainer = styled(Box)(() => ({
+  "& > img": {
+    maxWidth: "100%",
+    maxHeight: "100%",
+  },
+  display: "flex",
+  alignItems: "center",
+  width: "3rem",
+  cursor: "pointer",
+}));

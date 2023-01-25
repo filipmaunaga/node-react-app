@@ -7,7 +7,9 @@ export const StyledForm = styled(Box)(() => ({
   margin: "0 auto",
 }));
 
-export const StyledCommentContent = styled(TextField)(() => ({}));
+export const StyledCommentContent = styled(TextField)(({ theme }) => ({
+  fontFamily: theme.typography.h3.fontFamily,
+}));
 
 export const StyledFormTitle = styled(Box)(() => ({
   display: "flex",
@@ -17,17 +19,21 @@ export const StyledFormTitle = styled(Box)(() => ({
 
 export const StyledCommentCard = styled(Card)(() => ({
   display: "flex",
-  margin: "1rem auto 2rem 1rem",
+  flexDirection: "column",
+  margin: "0.5rem auto 0.5rem auto",
   minWidth: "20rem",
-  width: "80%",
-  backgroundColor: "#ECECEC",
+  width: "70%",
+  backgroundColor: "#eeeeee",
 }));
 
 export const StyledCommentFormContainer = styled(Box)(() => ({
   display: "flex",
-  margin: "1rem auto 2rem 1rem",
+  margin: "2rem auto 2rem auto",
   minWidth: "20rem",
-  width: "80%",
+  width: "70%",
+  backgroundColor: "#eeeeee",
+  padding: "2rem",
+  boxSizing: "border-box",
 }));
 export const StyledCommentForm = styled(Box)(() => ({
   width: "100%",

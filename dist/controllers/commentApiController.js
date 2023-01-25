@@ -23,7 +23,14 @@ const getComments = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
 });
 const getComment = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        yield res.send("comments");
+        const post = yield Post.findById(req.params.id);
+        if (!post)
+            return res.status(404).json({ message: "Post not found" });
+        const comment = post.comments.id(req.params.commentId);
+        if (!comment)
+            return res.status(404).json({ message: "Comment not found" });
+        yield post.save();
+        res.json(comment);
     }
     catch (err) {
         res.send(err);
@@ -72,11 +79,14 @@ const deleteComment = (req, res) => __awaiter(void 0, void 0, void 0, function* 
         yield post.save();
         res.json({ message: "Comment deleted successfully" });
     }
-    catch (err) { }
+    catch (err) {
+        res.send(err);
+    }
 });
 module.exports = {
     getComments,
     createNewComment,
     updateComment,
     deleteComment,
+    getComment,
 };
