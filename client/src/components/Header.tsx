@@ -1,6 +1,11 @@
 import * as React from "react";
-import { StyledHeader, StyledMenuItemContainer } from "./styled/Layout";
+import {
+  StyledHeader,
+  StyledLogoContainer,
+  StyledMenuItemContainer,
+} from "./styled/Layout";
 import { useNavigate } from "react-router-dom";
+import { ZeroDollarIdeaLogo } from "../assets/images/ZeroDollarIdeaLogo";
 
 const Header = (): JSX.Element => {
   const navigate = useNavigate();
@@ -21,7 +26,9 @@ const Header = (): JSX.Element => {
 
   return (
     <StyledHeader>
-      <div>Logo</div>
+      <StyledLogoContainer onClick={() => redirect("/")}>
+        <img src="https://zerosystems.com/wp-content/uploads/2022/03/ZERO-Black-Logo.png" />
+      </StyledLogoContainer>
       {menuItems.map((item) => (
         <StyledMenuItemContainer
           key={item.itemName}

@@ -3,6 +3,7 @@ export interface IPost {
   title: string;
   content: string;
   numberOfLikes: number;
+  date: string;
 }
 
 export interface ISinglePost {
@@ -19,4 +20,5 @@ export interface ISinglePost {
       numberOfLikes: number;
     }
   ) => Promise<void>;
+  handleDelete?: (postId: string) => void;
 }

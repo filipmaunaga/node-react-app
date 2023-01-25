@@ -1,7 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const Post = require("../models/postModel");
-const { getPosts, getSinglePost, createNewPost, updatePost, deletePost, deleteAll, } = require("../controllers/apiController");
+const { getPosts, getSinglePost, createNewPost, updatePost, deletePost, } = require("../controllers/postApiController");
 module.exports = (app) => {
     app.get("/posts", getPosts);
     app.get("/posts/:id", getSinglePost);

@@ -1,36 +1,59 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { Button, Typography } from "@mui/material";
+import { Button, ClickAwayListener, Tooltip, Typography } from "@mui/material";
 import {
   StyledForm,
   StyledFormContainer,
   StyledFormTitle,
-  StyledPostContent,
-  StyledPostTitle,
+  StyledPostContentInput,
+  StyledPostTitleInput,
+  StyledSubmitButton,
 } from "./styled/Form";
 import { IPost } from "./models/PostModel";
 
 const Compose = (): JSX.Element => {
+  const options: Intl.DateTimeFormatOptions = {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  };
+  const postDate = new Date().toLocaleDateString("en-US", options);
+
   const [postData, setPostData] = useState<IPost>({
     title: "",
     content: "",
     numberOfLikes: 0,
+    date: postDate,
   });
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
     console.log(postData);
     try {
       const data = {
         postTitle: postData.title,
         postBody: postData.content,
         numberOfLikes: postData.numberOfLikes,
+        postDate: postData.date,
       };
       const res = await axios.post("/posts", data);
-      console.log(res.data);
+      setPostData({ ...postData, title: "", content: "" });
+
+      handleTooltipOpen();
     } catch (err) {
       console.log(err);
     }
+  };
+
+  const [open, setOpen] = useState<boolean>(false);
+
+  const handleTooltipClose = () => {
+    setOpen(false);
+  };
+
+  const handleTooltipOpen = () => {
+    setOpen(true);
   };
 
   return (
@@ -42,7 +65,7 @@ const Compose = (): JSX.Element => {
       </StyledFormTitle>
       <StyledForm>
         <form onSubmit={handleSubmit}>
-          <StyledPostTitle
+          <StyledPostTitleInput
             label="Post title"
             onChange={(
               e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
@@ -51,8 +74,10 @@ const Compose = (): JSX.Element => {
             }}
             fullWidth
             required
+            value={postData.title}
           />
-          <StyledPostContent
+
+          <StyledPostContentInput
             label="Post content"
             onChange={(
               e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
@@ -61,12 +86,29 @@ const Compose = (): JSX.Element => {
             }}
             fullWidth
             required
+            value={postData.content}
             multiline
             rows={4}
           />
-          <Button variant="contained" type="submit">
-            Submit
-          </Button>
+          <ClickAwayListener onClickAway={handleTooltipClose}>
+            <div>
+              <Tooltip
+                PopperProps={{
+                  disablePortal: true,
+                }}
+                onClose={handleTooltipClose}
+                open={open}
+                disableFocusListener
+                disableHoverListener
+                disableTouchListener
+                title="Post created successfully!"
+              >
+                <StyledSubmitButton variant="contained" type="submit">
+                  Submit
+                </StyledSubmitButton>
+              </Tooltip>
+            </div>
+          </ClickAwayListener>
         </form>
       </StyledForm>
     </StyledFormContainer>

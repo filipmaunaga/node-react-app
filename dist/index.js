@@ -4,7 +4,8 @@ const express = require("express");
 const app = express();
 const cors = require("cors");
 const mongoose = require("mongoose");
-const apiRoutes = require("./routes/apiRoutes");
+const postApiRoutes = require("./routes/postApiRoutes");
+const commentApiRoutes = require("./routes/commentApiRoutes");
 app.use(cors());
 app.use(express.json());
 require("dotenv").config({ path: "./server/config.env" });
@@ -14,7 +15,8 @@ mongoose
     useNewUrlParser: true,
 })
     .then(() => console.log("db Connected"));
-apiRoutes(app);
+postApiRoutes(app);
+commentApiRoutes(app);
 app.get("/api", (req, res) => {
     res.json({ message: "Hello from server!" });
 });
