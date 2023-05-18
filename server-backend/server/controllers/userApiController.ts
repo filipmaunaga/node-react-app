@@ -28,3 +28,8 @@ const createUser = async (req: Request, res: Response) => {
     res.status(500).send(error);
   }
 };
+
+module.exports = {
+  getUsers,
+  createUser,
+};

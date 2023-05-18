@@ -5,6 +5,7 @@ const cors = require('cors');
 const mongoose = require('mongoose');
 const postApiRoutes = require('./routes/postApiRoutes');
 const commentApiRoutes = require('./routes/commentApiRoutes');
+const usersApiRoutes = require('./routes/userApiRoutes');
 
 app.use(cors());
 app.use(express.json());
@@ -21,6 +22,8 @@ mongoose
 postApiRoutes(app);
 
 commentApiRoutes(app);
+
+usersApiRoutes(app);
 
 app.get('/api', (req: Request, res: Response) => {
   res.json({ message: 'Hello from server!' });
