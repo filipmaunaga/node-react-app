@@ -1,4 +1,4 @@
-import { Schema, model } from "mongoose";
+import { Schema, model } from 'mongoose';
 
 export interface IComment {
   commentBody: string;
@@ -12,6 +12,6 @@ const commentSchema = new Schema<IComment>({
   commentDate: { type: String, required: true },
 });
 
-const postComment = model<IComment>("Comment", commentSchema);
+const postComment = model<IComment>('Comment', commentSchema);
 
 module.exports = postComment;
