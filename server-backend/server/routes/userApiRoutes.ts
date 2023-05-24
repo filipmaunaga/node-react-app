@@ -1,7 +1,8 @@
 import { Express } from 'express';
-const { getUsers, createUser } = require('../controllers/userApiController');
+const { getUsers, signUpUser, loginUser } = require('../controllers/userApiController');
 
 module.exports = (app: Express) => {
   app.get('/users', getUsers);
-  app.post('/users', createUser);
+  app.post('/signup', signUpUser);
+  app.post('/login', loginUser);
 };

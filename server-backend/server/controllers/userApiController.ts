@@ -1,5 +1,12 @@
 import { Request, Response } from 'express';
+
+const jwt = require('jsonwebtoken');
 const User = require('../models/userModel');
+
+//payload of token is the _id
+const createToken = (_id: string) => {
+  return jwt.sign({ _id }, process.env.SECRET, { expiresIn: '3d' });
+};
 
 const getUsers = async (req: Request, res: Response) => {
   try {
@@ -10,26 +17,36 @@ const getUsers = async (req: Request, res: Response) => {
   }
 };
 
-const createUser = async (req: Request, res: Response) => {
+const signUpUser = async (req: Request, res: Response) => {
   try {
-    const { username, email, password } = req.body;
+    const { email, password } = req.body;
+    const user = await User.signup(email, password);
 
-    // Check if user already exists
-    const existingUser = (await User.findOne({ email })) || (await User.findOne({ username }));
-    if (existingUser) {
-      return res.status(409).json({ message: 'User with this email already exists' });
-    }
+    // create a token
+    const token = createToken(user._id);
 
-    // Create a new user
-    const user = new User({ username, email, password });
-    await user.save();
-    res.status(201).json({ message: 'User created successfully' });
-  } catch (error) {
-    res.status(500).send(error);
+    res.status(201).json({ message: 'User created successfully!', email, token });
+  } catch (error: any) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
+const loginUser = async (req: Request, res: Response) => {
+  try {
+    const { email, password } = req.body;
+    const user = await User.login(email, password);
+
+    // create a token
+    const token = createToken(user._id);
+
+    res.status(201).json({ message: 'User logged in successfully!', token });
+  } catch (error: any) {
+    res.status(500).json({ error: error.message });
   }
 };
 
 module.exports = {
   getUsers,
-  createUser,
+  signUpUser,
+  loginUser,
 };
