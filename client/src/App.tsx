@@ -5,6 +5,11 @@ import Header from "./components/Header";
 import Compose from "./pages/Compose";
 import Posts from "./pages/Posts";
 import PostDetails from "./pages/PostDetails";
+import {QueryClient,
+QueryClientProvider} from 'react-query';
+import SignUp from "./pages/SignUp";
+
+const queryClient = new QueryClient()
 
 function App() {
   const theme = createTheme({
@@ -21,16 +26,19 @@ function App() {
   });
 
   return (
+    <QueryClientProvider client={queryClient}>
     <Router>
       <ThemeProvider theme={theme}>
         <Header />
         <Routes>
           <Route path="/" element={<Posts />} />
+          <Route path="/signup" element={<SignUp />} />
           <Route path="/compose" element={<Compose />} />
           <Route path="/posts/:id" element={<PostDetails />} />
         </Routes>
       </ThemeProvider>
     </Router>
+    </QueryClientProvider>
   );
 }
 

@@ -18,6 +18,10 @@ const Header = (): JSX.Element => {
       itemName: "Compose",
       itemPath: "/compose",
     },
+    {
+      itemName: "Sign Up",
+      itemPath: "/signup",
+    },
   ];
 
   const redirect = (path: string): void => {

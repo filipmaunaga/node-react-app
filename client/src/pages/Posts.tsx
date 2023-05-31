@@ -6,9 +6,19 @@ import {
   deletePost,
 } from "../services/PostServices";
 import usePosts from "../hooks/usePosts";
+import { useAuthStore } from "../store/auth/useAuthStore";
 
 const Posts = (): JSX.Element => {
   const [data, setData, getData] = usePosts();
+  const isLoading = useAuthStore((state) => state.isLoading);
+  const setIsLoading = useAuthStore((state) => state.setIsLoading);
+
+  console.log(isLoading);
+
+  const handleClick = () => {
+setIsLoading(!isLoading);
+  }
+
 
   const handleDelete = async (postId: string) => {
     await deletePost(postId);
@@ -35,7 +45,9 @@ const Posts = (): JSX.Element => {
             handleDelete={handleDelete}
           />
         ))
+        
       )}
+      <button onClick={handleClick}>Click me</button>
     </div>
   );
 };
