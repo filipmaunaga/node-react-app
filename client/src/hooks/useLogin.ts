@@ -1,19 +1,19 @@
 import { useMutation } from 'react-query';
-import { signUpUser } from '../services/AuthServices';
+import { loginUser } from '../services/AuthServices';
 import { useAuthStore } from '../store/auth/useAuthStore';
 
-const useSignUp = () => {
+const useLogin = () => {
   const user = useAuthStore((state) => state.user);
   const setUser = useAuthStore((state) => state.setUser);
 
-  const signUpUserMutation = useMutation({
-    mutationFn: signUpUser,
+  const loginUserMutation = useMutation({
+    mutationFn: loginUser,
     onSuccess: (data) => {
       setUser(data);
       localStorage.setItem('user', data.token);
     },
   });
-  return [signUpUserMutation] as const;
+  return [loginUserMutation] as const;
 };
 
-export default useSignUp;
+export default useLogin;

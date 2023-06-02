@@ -1,19 +1,17 @@
+import axios from 'axios';
 import { useMutation } from 'react-query';
 import { signUpUser } from '../services/AuthServices';
 import { useAuthStore } from '../store/auth/useAuthStore';
 
-const useSignUp = () => {
+const useLogout = () => {
   const user = useAuthStore((state) => state.user);
   const setUser = useAuthStore((state) => state.setUser);
+  const logoutUser = (): void => {
+    setUser(null);
+    localStorage.removeItem('user');
+  };
 
-  const signUpUserMutation = useMutation({
-    mutationFn: signUpUser,
-    onSuccess: (data) => {
-      setUser(data);
-      localStorage.setItem('user', data.token);
-    },
-  });
-  return [signUpUserMutation] as const;
+  return [logoutUser] as const;
 };
 
-export default useSignUp;
+export default useLogout;

@@ -20,6 +20,7 @@
   "homepage": "https://github.com/filipmaunaga/node-react-app#readme",
   "dependencies": {
     "@types/cors": "^2.8.13",
+    "@types/validator": "^13.7.17",
     "bcrypt": "^5.1.0",
     "cors": "^2.8.5",
     "dotenv": "^16.0.3",

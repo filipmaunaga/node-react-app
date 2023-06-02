@@ -9,23 +9,23 @@ import {
   StyledPostTitleInput,
   StyledSubmitButton,
 } from './styled/Form';
-import useSignUp from '../hooks/useSignUp';
 import { useAuthStore } from '../store/auth/useAuthStore';
+import useLogin from '../hooks/useLogin';
 
-const SignUp = (): JSX.Element => {
+const Login = (): JSX.Element => {
   const [userCredentials, setUserCredentials] = useState<IUserCredentials>({
     email: '',
     password: '',
   });
-  const [signUpUserMutation] = useSignUp();
+  const [loginUserMutation] = useLogin();
   const isLoading = useAuthStore((state) => state.isLoading);
   const setIsLoading = useAuthStore((state) => state.setIsLoading);
   const user = useAuthStore((state) => state.user);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    await signUpUserMutation.mutate(userCredentials);
-    signUpUserMutation.isLoading ? console.log('dsafds') : setIsLoading(false);
+    await loginUserMutation.mutate(userCredentials);
+    loginUserMutation.isLoading ? console.log('dsafds') : setIsLoading(false);
   };
 
   console.log('user', user);
@@ -34,7 +34,7 @@ const SignUp = (): JSX.Element => {
     <StyledFormContainer>
       <StyledFormTitle>
         <Typography variant="h6" component="h2" gutterBottom>
-          Sign Up
+          Login
         </Typography>
       </StyledFormTitle>
       <StyledForm>
@@ -60,10 +60,10 @@ const SignUp = (): JSX.Element => {
             value={userCredentials.password}
           />
           <StyledSubmitButton variant="contained" type="submit" disabled={isLoading}>
-            Sign Up
+            Login
           </StyledSubmitButton>
-          {signUpUserMutation.isError && (
-            <p style={{ color: 'red' }}>{(signUpUserMutation.error as any).response.data.error}</p>
+          {loginUserMutation.isError && (
+            <p style={{ color: 'red' }}>{(loginUserMutation.error as any).response.data.error}</p>
           )}
         </form>
       </StyledForm>
@@ -71,4 +71,4 @@ const SignUp = (): JSX.Element => {
   );
 };
 
-export default SignUp;
+export default Login;

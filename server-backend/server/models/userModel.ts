@@ -14,20 +14,31 @@ const userSchema = new Schema<IUser>({
 
 userSchema.statics.signup = async function (email, password) {
   // validation
+
+  const exists = await this.findOne({ email });
+
+  if (exists) {
+    throw Error('Email already in use');
+  }
+
   if (!email || !password) {
     throw Error('All fields must be filled');
   }
   if (!validator.isEmail(email)) {
     throw Error('Email not valid');
   }
-  if (!validator.isStrongPassword(password)) {
-    throw Error('Password not strong enough');
-  }
-
-  const exists = await this.findOne({ email });
-
-  if (exists) {
-    throw Error('Email already in use');
+  if (
+    !validator.isStrongPassword(password, {
+      minLength: 8,
+      minLowercase: 1,
+      minUppercase: 1,
+      minNumbers: 1,
+      minSymbols: 0,
+    })
+  ) {
+    throw Error(
+      'Password should contain at least 8 characters, 1 lower case character, 1 upper case character, and a number'
+    );
   }
 
   const salt = await bcrypt.genSalt(10);

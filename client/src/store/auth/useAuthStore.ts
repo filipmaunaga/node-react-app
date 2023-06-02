@@ -7,7 +7,7 @@ export interface AuthState {
 }
 
 type AuthActions = {
-  setUser: (payload: Object) => void;
+  setUser: (payload: Object | null) => void;
   setError: (payload: string) => void;
   setIsLoading: (payload: boolean) => void;
 };
