@@ -1,36 +1,42 @@
-import { Button } from "@mui/material";
-import axios from "axios";
-import React, { useState } from "react";
-import { IPostSingleComment } from "../pages/models/PostCommentModel";
-import { StyledSubmitButton } from "../pages/styled/Form";
+import { Button } from '@mui/material';
+import axios from 'axios';
+import React, { useState } from 'react';
+import { IPostSingleComment } from '../pages/models/PostCommentModel';
+import { StyledSubmitButton } from '../pages/styled/Form';
 import {
   StyledCommentContent,
   StyledCommentForm,
   StyledCommentFormContainer,
-} from "./styled/StyledComment";
+} from './styled/StyledComment';
+import { IUser, useAuthStore } from '../store/auth/useAuthStore';
 
-const NewComment = ({ id }: any): JSX.Element => {
+const NewComment = ({ id, user }: { id: any; user: IUser | null }): JSX.Element => {
   const options: Intl.DateTimeFormatOptions = {
-    year: "numeric",
-    month: "long",
-    day: "numeric",
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
   };
-  const commentDate = new Date().toLocaleDateString("en-US", options);
+  const commentDate = new Date().toLocaleDateString('en-US', options);
 
   const [newComment, setNewComment] = useState<IPostSingleComment>({
-    commentContent: "",
+    commentContent: '',
     commentNumberOfLikes: 0,
     date: commentDate,
   });
 
   const handleCommentSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    if (!user) return;
     try {
       const data = {
         commentBody: newComment.commentContent,
         commentNumberOfLikes: newComment.commentNumberOfLikes,
         commentDate: newComment.date,
       };
-      const res = await axios.post(`/comments/${id}`, data);
+      const res = await axios.post(`/comments/${id}`, data, {
+        headers: {
+          Authorization: `Bearer ${user.token}`,
+        },
+      });
     } catch (err) {
       console.log(err);
     }
@@ -45,9 +51,7 @@ const NewComment = ({ id }: any): JSX.Element => {
             multiline
             rows={3}
             fullWidth
-            onChange={(
-              e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
-            ) => {
+            onChange={(e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
               setNewComment({ ...newComment, commentContent: e.target.value });
             }}
           />

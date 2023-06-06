@@ -18,14 +18,11 @@ const Login = (): JSX.Element => {
     password: '',
   });
   const [loginUserMutation] = useLogin();
-  const isLoading = useAuthStore((state) => state.isLoading);
-  const setIsLoading = useAuthStore((state) => state.setIsLoading);
   const user = useAuthStore((state) => state.user);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     await loginUserMutation.mutate(userCredentials);
-    loginUserMutation.isLoading ? console.log('dsafds') : setIsLoading(false);
   };
 
   console.log('user', user);
@@ -37,35 +34,37 @@ const Login = (): JSX.Element => {
           Login
         </Typography>
       </StyledFormTitle>
-      <StyledForm>
-        <form onSubmit={handleSubmit}>
-          <StyledPostTitleInput
-            label="Email"
-            onChange={(e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
-              setUserCredentials({ ...userCredentials, email: e.target.value });
-            }}
-            fullWidth
-            required
-            value={userCredentials.email}
-          />
+      <StyledForm onSubmit={handleSubmit}>
+        <StyledPostTitleInput
+          label="Email"
+          onChange={(e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
+            setUserCredentials({ ...userCredentials, email: e.target.value });
+          }}
+          fullWidth
+          required
+          value={userCredentials.email}
+        />
 
-          <StyledPostContentInput
-            label="Password"
-            type="password"
-            onChange={(e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
-              setUserCredentials({ ...userCredentials, password: e.target.value });
-            }}
-            fullWidth
-            required
-            value={userCredentials.password}
-          />
-          <StyledSubmitButton variant="contained" type="submit" disabled={isLoading}>
-            Login
-          </StyledSubmitButton>
-          {loginUserMutation.isError && (
-            <p style={{ color: 'red' }}>{(loginUserMutation.error as any).response.data.error}</p>
-          )}
-        </form>
+        <StyledPostContentInput
+          label="Password"
+          type="password"
+          onChange={(e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
+            setUserCredentials({ ...userCredentials, password: e.target.value });
+          }}
+          fullWidth
+          required
+          value={userCredentials.password}
+        />
+        <StyledSubmitButton
+          variant="contained"
+          type="submit"
+          disabled={loginUserMutation.isLoading}
+        >
+          Login
+        </StyledSubmitButton>
+        {loginUserMutation.isError && (
+          <p style={{ color: 'red' }}>{(loginUserMutation.error as any).response.data.error}</p>
+        )}
       </StyledForm>
     </StyledFormContainer>
   );

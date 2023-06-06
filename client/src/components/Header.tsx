@@ -1,12 +1,19 @@
 import * as React from 'react';
-import { StyledHeader, StyledLogoContainer, StyledMenuItemContainer } from './styled/Layout';
+import {
+  StyledAuthContainer,
+  StyledHeader,
+  StyledLogoContainer,
+  StyledMenuItemContainer,
+  StyledUserEmail,
+} from './styled/Layout';
 import { useNavigate } from 'react-router-dom';
-import { ZeroDollarIdeaLogo } from '../assets/images/ZeroDollarIdeaLogo';
 import useLogout from '../hooks/useLogout';
+import { useAuthStore } from '../store/auth/useAuthStore';
 
 const Header = (): JSX.Element => {
   const navigate = useNavigate();
   const [logoutUser] = useLogout();
+  const user = useAuthStore((state) => state.user);
 
   const menuItems = [
     {
@@ -16,14 +23,6 @@ const Header = (): JSX.Element => {
     {
       itemName: 'Compose',
       itemPath: '/compose',
-    },
-    {
-      itemName: 'Sign Up',
-      itemPath: '/signup',
-    },
-    {
-      itemName: 'Login',
-      itemPath: '/login',
     },
   ];
 
@@ -45,9 +44,26 @@ const Header = (): JSX.Element => {
           <p>{item.itemName}</p>
         </StyledMenuItemContainer>
       ))}
-      <StyledMenuItemContainer onClick={handleLogout}>
-        <p>Logout</p>
-      </StyledMenuItemContainer>
+      {!user && (
+        <StyledAuthContainer>
+          <StyledMenuItemContainer onClick={() => redirect('/signup')}>
+            <p>Sign up</p>
+          </StyledMenuItemContainer>
+          <StyledMenuItemContainer onClick={() => redirect('/login')}>
+            <p>Login</p>
+          </StyledMenuItemContainer>
+        </StyledAuthContainer>
+      )}
+      {user && (
+        <StyledAuthContainer>
+          <StyledMenuItemContainer>
+            <StyledUserEmail>{user.email}</StyledUserEmail>
+          </StyledMenuItemContainer>
+          <StyledMenuItemContainer onClick={handleLogout}>
+            <p>Logout</p>
+          </StyledMenuItemContainer>
+        </StyledAuthContainer>
+      )}
     </StyledHeader>
   );
 };

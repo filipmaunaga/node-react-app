@@ -6,6 +6,7 @@ const mongoose = require('mongoose');
 const postApiRoutes = require('./routes/postApiRoutes');
 const commentApiRoutes = require('./routes/commentApiRoutes');
 const usersApiRoutes = require('./routes/userApiRoutes');
+const requireAuth = require('./middleware/requireAuth');
 
 app.use(cors());
 app.use(express.json());
@@ -19,11 +20,13 @@ mongoose
   })
   .then(() => console.log('db Connected'));
 
+usersApiRoutes(app);
+
+app.use(requireAuth);
+
 postApiRoutes(app);
 
 commentApiRoutes(app);
-
-usersApiRoutes(app);
 
 app.get('/api', (req: Request, res: Response) => {
   res.json({ message: 'Hello from server!' });

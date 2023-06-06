@@ -1,15 +1,17 @@
 import { create } from 'zustand';
 
+export interface IUser extends Object {
+  email: string;
+  message: string;
+  token: string;
+}
+
 export interface AuthState {
-  user: Object | null;
-  error: string;
-  isLoading: boolean;
+  user: IUser | null;
 }
 
 type AuthActions = {
-  setUser: (payload: Object | null) => void;
-  setError: (payload: string) => void;
-  setIsLoading: (payload: boolean) => void;
+  setUser: (payload: IUser | null) => void;
 };
 
 export const useAuthStore = create<AuthState & AuthActions>()((set) => ({
@@ -17,6 +19,4 @@ export const useAuthStore = create<AuthState & AuthActions>()((set) => ({
   error: '',
   isLoading: false,
   setUser: (payload) => set((state) => ({ user: payload })),
-  setError: (payload) => set((state) => ({ error: payload })),
-  setIsLoading: (payload) => set((state) => ({ isLoading: payload })),
 }));

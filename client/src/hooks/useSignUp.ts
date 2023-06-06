@@ -10,7 +10,7 @@ const useSignUp = () => {
     mutationFn: signUpUser,
     onSuccess: (data) => {
       setUser(data);
-      localStorage.setItem('user', data.token);
+      localStorage.setItem('user', JSON.stringify(data));
     },
   });
   return [signUpUserMutation] as const;

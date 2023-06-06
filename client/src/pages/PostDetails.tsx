@@ -1,5 +1,5 @@
-import React from "react";
-import { handlePlusOne, handleMinusOne } from "../services/PostServices";
+import React, { useEffect } from 'react';
+import { handlePlusOne, handleMinusOne } from '../services/PostServices';
 import {
   StyledCard,
   StyledCardActions,
@@ -11,21 +11,25 @@ import {
   StyledLineSeparator,
   StyledNumberOfLikesContainer,
   StyledPostTitleContainer,
-} from "./styled/Post";
-import { CardContent, Typography } from "@mui/material";
-import PostComment from "../components/PostComment";
-import NewComment from "../components/NewComment";
-import {
-  commentUpVote,
-  commentDownVote,
-  deleteComment,
-} from "../services/CommentServices";
-import useSinglePost from "../hooks/useSinglePost";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faDownLong, faUpLong } from "@fortawesome/free-solid-svg-icons";
+} from './styled/Post';
+import { CardContent, Typography } from '@mui/material';
+import PostComment from '../components/PostComment';
+import NewComment from '../components/NewComment';
+import { commentUpVote, commentDownVote, deleteComment } from '../services/CommentServices';
+import useSinglePost from '../hooks/useSinglePost';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faDownLong, faUpLong } from '@fortawesome/free-solid-svg-icons';
+import { IUser, useAuthStore } from '../store/auth/useAuthStore';
 
 const PostDetails = (): JSX.Element => {
-  const [id, data, comments, getSinglePost, getComments] = useSinglePost();
+  const user = useAuthStore((state) => state.user);
+  const [id, data, comments, getSinglePost, getComments] = useSinglePost(user as IUser);
+
+  useEffect(() => {
+    if (!user) return;
+    getSinglePost(id as string);
+    getComments();
+  }, [user]);
 
   return (
     <div>
@@ -67,9 +71,7 @@ const PostDetails = (): JSX.Element => {
                 <FontAwesomeIcon icon={faDownLong} />
               </StyledIconDownVote>
             </StyledLikesContainer>
-            <StyledNumberOfLikesContainer>
-              {data.numberOfLikes}
-            </StyledNumberOfLikesContainer>
+            <StyledNumberOfLikesContainer>{data.numberOfLikes}</StyledNumberOfLikesContainer>
           </StyledLikesWrapper>
         </StyledCardActions>
       </StyledCard>
@@ -94,7 +96,7 @@ const PostDetails = (): JSX.Element => {
           />
         ))
       )}
-      <NewComment id={id} />
+      <NewComment id={id} user={user} />
     </div>
   );
 };

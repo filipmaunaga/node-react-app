@@ -10,7 +10,7 @@ const useLogin = () => {
     mutationFn: loginUser,
     onSuccess: (data) => {
       setUser(data);
-      localStorage.setItem('user', data.token);
+      localStorage.setItem('user', JSON.stringify(data));
     },
   });
   return [loginUserMutation] as const;

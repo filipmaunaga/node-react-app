@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Header from './components/Header';
@@ -8,10 +8,22 @@ import PostDetails from './pages/PostDetails';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import SignUp from './pages/SignUp';
 import Login from './pages/Login';
+import { useAuthStore } from './store/auth/useAuthStore';
 
 const queryClient = new QueryClient();
 
 function App() {
+  const setUser = useAuthStore((state) => state.setUser);
+
+  // Check if user is logged in
+  useEffect(() => {
+    const localStorageUser = JSON.parse(localStorage.getItem('user') as string);
+
+    if (localStorageUser) {
+      setUser(localStorageUser);
+    }
+  }, []);
+
   const theme = createTheme({
     typography: {
       h3: {
