@@ -5,6 +5,27 @@ On this blog, you can write down your ideas and maybe someone will make your ide
 
 If this happens and it turns out to be successful, then you should be proud of yourself for making this happen, and not hold any grudges. The goal is to be unselfish!
 
+## Project Details
+
+Project displays use of following packages:
+
+Backend:
+
+- express
+- mongoose
+- jsonwebtoken
+- bcrypt
+- validator
+
+Frontend:
+
+- react router dom
+- axios
+- mui
+- fortawesome
+- react query
+- zustand
+
 ## Technologies Used
 
 - MongoDB
@@ -16,36 +37,41 @@ If this happens and it turns out to be successful, then you should be proud of y
 
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes.
 
-1. Clone the repository:
+1. Clone the repository
 
-   git clone <repository-url>
+2. Install the dependencies both on server and client side:
 
-2. Install the dependencies:
-   cd <project-folder>
-   npm install
+   cd <server-backend>
+   `npm install` or `yarn install`
+
+   cd <client>
+   `npm install` or `yarn install`
+
 3. Set up the environment variables:
 
-Create a .env file in the root of the project.
-Provide the required environment variables (e.g., database connection details, API keys) in the .env file. 4. Start the development server:
-npm start 5. Open your web browser and navigate to http://localhost:3000 to view the app.
+Create a config.env file in <server-backend/server>
+Provide the following environment variables in the .env file:
 
-## Folder Structure
+PORT (port on which the server will be running, for example 3001)
+ATLAS_URI (URI of your MongoDB)
+SECRET (string used for verifying hashed passwords)
 
-Explain the structure of your project's folders and files.
+4.  Start the development server:
 
-## Deployment
+cd <server-backend>
+`npm start`
 
-Add instructions for deploying the app to a production environment (e.g., Heroku, AWS, etc.).
+5. Start the React app:
 
-## Contributing
+cd <client>
+`npm start`
 
-Explain how others can contribute to your project. Include information about submitting pull requests, creating issues, and other guidelines.
+6. Open your web browser and navigate to http://localhost:3000 to view the app.
 
 ## Authors
 
-Author 1
-Author 2
+Filip Maunaga (https://github.com/filipmaunaga/)
 
 ## sAcknowledgments
 
-Mention any resources, tutorials, or people that you would like to acknowledge.
+Auth tutorial https://github.com/iamshaunjp
