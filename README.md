@@ -10,7 +10,6 @@ If this happens and it turns out to be successful, then you should be proud of y
 Project displays use of following packages:
 
 Backend:
-
 - express
 - mongoose
 - jsonwebtoken
@@ -18,7 +17,6 @@ Backend:
 - validator
 
 Frontend:
-
 - react router dom
 - axios
 - mui
@@ -70,8 +68,8 @@ cd <client>
 
 ## Authors
 
-Filip Maunaga (https://github.com/filipmaunaga/)
+Filip Maunaga https://github.com/filipmaunaga/
 
-## sAcknowledgments
+## Acknowledgments
 
 Auth tutorial https://github.com/iamshaunjp
