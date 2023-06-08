@@ -1,6 +1,6 @@
-import React, { useState } from "react";
-import { CardContent, Typography } from "@mui/material";
-import { IPost, ISinglePost } from "../pages/models/PostModel";
+import React, { useState } from 'react';
+import { CardContent, Typography } from '@mui/material';
+import { IPost, ISinglePost } from '../pages/models/PostModel';
 import {
   StyledCard,
   StyledCardActions,
@@ -13,27 +13,23 @@ import {
   StyledLineSeparator,
   StyledNumberOfLikesContainer,
   StyledPostTitleContainer,
-} from "../pages/styled/Post";
-import axios from "axios";
-import { Link } from "react-router-dom";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faUpLong,
-  faDownLong,
-  faTrash,
-} from "@fortawesome/free-solid-svg-icons";
+} from '../pages/styled/Post';
+import axios from 'axios';
+import { Link } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faUpLong, faDownLong, faTrash } from '@fortawesome/free-solid-svg-icons';
 
-const SinglePost = ({
-  post,
-  handlePlusOne,
-  handleMinusOne,
-  handleDelete,
-}: ISinglePost) => {
+const SinglePost = ({ post, handlePlusOne, handleMinusOne, handleDelete, user }: ISinglePost) => {
   const [singlePost, setSinglePost] = useState<IPost>(post);
 
   const updateSinglePost = async (postId: string) => {
+    if (!user) return;
     try {
-      const res = await axios.get(`/posts/${postId}`);
+      const res = await axios.get(`/posts/${postId}`, {
+        headers: {
+          Authorization: `Bearer ${user.token}`,
+        },
+      });
       const updatedPost = res.data;
       setSinglePost({
         id: updatedPost._id,
@@ -64,8 +60,9 @@ const SinglePost = ({
           <StyledLikesContainer>
             <StyledIconUpVote
               onClick={async () => {
+                if (!user) return;
                 if (!handlePlusOne) return;
-                await handlePlusOne(singlePost.id as string, {
+                await handlePlusOne(singlePost.id as string, user, {
                   numberOfLikes: singlePost.numberOfLikes + 1,
                 });
                 updateSinglePost(singlePost.id as string);
@@ -75,8 +72,9 @@ const SinglePost = ({
             </StyledIconUpVote>
             <StyledIconDownVote
               onClick={async () => {
+                if (!user) return;
                 if (!handleMinusOne) return;
-                await handleMinusOne(singlePost.id as string, {
+                await handleMinusOne(singlePost.id as string, user, {
                   numberOfLikes: singlePost.numberOfLikes - 1,
                 });
 
@@ -86,9 +84,7 @@ const SinglePost = ({
               <FontAwesomeIcon icon={faDownLong} />
             </StyledIconDownVote>
           </StyledLikesContainer>
-          <StyledNumberOfLikesContainer>
-            {singlePost.numberOfLikes}
-          </StyledNumberOfLikesContainer>
+          <StyledNumberOfLikesContainer>{singlePost.numberOfLikes}</StyledNumberOfLikesContainer>
         </StyledLikesWrapper>
         <StyledIconDelete
           onClick={() => {

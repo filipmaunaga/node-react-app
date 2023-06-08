@@ -37,6 +37,7 @@ const Posts = (): JSX.Element => {
             handlePlusOne={handlePlusOne}
             handleMinusOne={handleMinusOne}
             handleDelete={handleDelete}
+            user={user as IUser}
           />
         ))
       )}

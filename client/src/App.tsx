@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Header from './components/Header';
 import Compose from './pages/Compose';
@@ -13,6 +13,7 @@ import { useAuthStore } from './store/auth/useAuthStore';
 const queryClient = new QueryClient();
 
 function App() {
+  const user = useAuthStore((state) => state.user);
   const setUser = useAuthStore((state) => state.setUser);
 
   // Check if user is logged in
@@ -43,9 +44,9 @@ function App() {
         <ThemeProvider theme={theme}>
           <Header />
           <Routes>
-            <Route path="/" element={<Posts />} />
-            <Route path="/signup" element={<SignUp />} />
-            <Route path="/login" element={<Login />} />
+            <Route path="/" element={user ? <Posts /> : <Navigate to="/login" />} />
+            <Route path="/signup" element={!user ? <SignUp /> : <Navigate to="/" />} />
+            <Route path="/login" element={!user ? <Login /> : <Navigate to="/" />} />
             <Route path="/compose" element={<Compose />} />
             <Route path="/posts/:id" element={<PostDetails />} />
           </Routes>

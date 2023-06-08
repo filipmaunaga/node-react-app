@@ -49,8 +49,9 @@ const PostDetails = (): JSX.Element => {
             <StyledLikesContainer>
               <StyledIconUpVote
                 onClick={async () => {
+                  if (!user) return;
                   if (!handlePlusOne) return;
-                  await handlePlusOne(data._id as string, {
+                  await handlePlusOne(data._id as string, user, {
                     numberOfLikes: data.numberOfLikes + 1,
                   });
                   getSinglePost(id as string);
@@ -60,8 +61,9 @@ const PostDetails = (): JSX.Element => {
               </StyledIconUpVote>
               <StyledIconDownVote
                 onClick={async () => {
+                  if (!user) return;
                   if (!handleMinusOne) return;
-                  await handleMinusOne(data._id as string, {
+                  await handleMinusOne(data._id as string, user, {
                     numberOfLikes: data.numberOfLikes - 1,
                   });
 
