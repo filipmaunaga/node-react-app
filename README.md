@@ -51,7 +51,9 @@ Create a config.env file in <server-backend/server>
 Provide the following environment variables in the .env file:
 
 PORT (port on which the server will be running, for example 3001)
+   
 ATLAS_URI (URI of your MongoDB)
+   
 SECRET (string used for verifying hashed passwords)
 
 4.  Start the development server:
