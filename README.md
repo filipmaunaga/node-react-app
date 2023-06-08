@@ -39,10 +39,12 @@ These instructions will get you a copy of the project up and running on your loc
 
 2. Install the dependencies both on server and client side:
 
-   cd <server-backend>
+   cd `server-backend`
+   
    `npm install` or `yarn install`
 
-   cd <client>
+   cd `client`
+   
    `npm install` or `yarn install`
 
 3. Set up the environment variables:
@@ -58,12 +60,14 @@ SECRET (string used for verifying hashed passwords)
 
 4.  Start the development server:
 
-cd <server-backend>
+cd `server-backend`
+
 `npm start`
 
 5. Start the React app:
 
-cd <client>
+cd `client`
+
 `npm start`
 
 6. Open your web browser and navigate to http://localhost:3000 to view the app.
