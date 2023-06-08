@@ -1,5 +1,5 @@
-import { Schema, model } from "mongoose";
-import { IComment } from "./commentModel";
+import { Schema, model } from 'mongoose';
+import { IComment } from './commentModel';
 
 export interface IPost {
   postTitle: string;
@@ -7,6 +7,7 @@ export interface IPost {
   numberOfLikes: number;
   postDate: string;
   comments?: IComment[];
+  userId: string;
 }
 
 const postSchema = new Schema<IPost>({
@@ -21,8 +22,9 @@ const postSchema = new Schema<IPost>({
       commentDate: { type: String },
     },
   ],
+  userId: { type: String, required: true },
 });
 
-const Post = model<IPost>("Post", postSchema);
+const Post = model<IPost>('Post', postSchema);
 
 module.exports = Post;

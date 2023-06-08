@@ -1,10 +1,12 @@
-const Post = require("../models/postModel");
-import { Request, Response } from "express";
-import { IPost } from "../models/postModel";
+const Post = require('../models/postModel');
+import { Request, Response } from 'express';
+import { IPost } from '../models/postModel';
+import { IAuthRequest } from '../middleware/requireAuth';
 
-const getPosts = async (req: Request, res: Response) => {
+const getPosts = async (req: IAuthRequest, res: Response) => {
   try {
-    const posts = await Post.find();
+    const userId = req.user._id;
+    const posts = await Post.find({ userId });
     posts.sort((a: IPost, b: IPost) => b.numberOfLikes - a.numberOfLikes);
     res.send(posts);
   } catch (err) {
@@ -21,9 +23,11 @@ const getSinglePost = async (req: Request, res: Response) => {
   }
 };
 
-const createNewPost = async (req: Request, res: Response) => {
+const createNewPost = async (req: IAuthRequest, res: Response) => {
+  const { postTitle, postBody, numberOfLikes, postDate, comments } = req.body;
   try {
-    const post = new Post(req.body);
+    const userId = req.user._id;
+    const post = new Post({ postTitle, postBody, numberOfLikes, postDate, comments, userId });
     await post.save();
     res.send(post);
   } catch (err) {
@@ -43,7 +47,7 @@ const updatePost = async (req: Request, res: Response) => {
 const deletePost = async (req: Request, res: Response) => {
   try {
     const post = await Post.findByIdAndDelete(req.params.id);
-    res.send("Deleted successfully!");
+    res.send('Deleted successfully!');
   } catch (err) {
     res.send(err);
   }

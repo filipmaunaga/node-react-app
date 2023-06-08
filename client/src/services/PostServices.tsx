@@ -1,11 +1,17 @@
-import axios from "axios";
+import axios from 'axios';
+import { IUser } from '../store/auth/useAuthStore';
 
 export const handlePlusOne = async (
   postId: string,
+  user: IUser,
   data: { numberOfLikes: number }
 ) => {
   try {
-    const res = await axios.put(`/posts/${postId}`, data);
+    const res = await axios.put(`/posts/${postId}`, data, {
+      headers: {
+        Authorization: `Bearer ${user.token}`,
+      },
+    });
     //getData();
   } catch (error) {
     console.log(error);
@@ -14,10 +20,15 @@ export const handlePlusOne = async (
 
 export const handleMinusOne = async (
   postId: string,
+  user: IUser,
   data: { numberOfLikes: number }
 ) => {
   try {
-    const res = await axios.put(`/posts/${postId}`, data);
+    const res = await axios.put(`/posts/${postId}`, data, {
+      headers: {
+        Authorization: `Bearer ${user.token}`,
+      },
+    });
     //getData();
   } catch (error) {
     console.log(error);

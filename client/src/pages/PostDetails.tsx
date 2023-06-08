@@ -1,5 +1,5 @@
-import React from "react";
-import { handlePlusOne, handleMinusOne } from "../services/PostServices";
+import React, { useEffect } from 'react';
+import { handlePlusOne, handleMinusOne } from '../services/PostServices';
 import {
   StyledCard,
   StyledCardActions,
@@ -11,21 +11,25 @@ import {
   StyledLineSeparator,
   StyledNumberOfLikesContainer,
   StyledPostTitleContainer,
-} from "./styled/Post";
-import { CardContent, Typography } from "@mui/material";
-import PostComment from "../components/PostComment";
-import NewComment from "../components/NewComment";
-import {
-  commentUpVote,
-  commentDownVote,
-  deleteComment,
-} from "../services/CommentServices";
-import useSinglePost from "../hooks/useSinglePost";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faDownLong, faUpLong } from "@fortawesome/free-solid-svg-icons";
+} from './styled/Post';
+import { CardContent, Typography } from '@mui/material';
+import PostComment from '../components/PostComment';
+import NewComment from '../components/NewComment';
+import { commentUpVote, commentDownVote, deleteComment } from '../services/CommentServices';
+import useSinglePost from '../hooks/useSinglePost';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faDownLong, faUpLong } from '@fortawesome/free-solid-svg-icons';
+import { IUser, useAuthStore } from '../store/auth/useAuthStore';
 
 const PostDetails = (): JSX.Element => {
-  const [id, data, comments, getSinglePost, getComments] = useSinglePost();
+  const user = useAuthStore((state) => state.user);
+  const [id, data, comments, getSinglePost, getComments] = useSinglePost(user as IUser);
+
+  useEffect(() => {
+    if (!user) return;
+    getSinglePost(id as string);
+    getComments();
+  }, [user]);
 
   return (
     <div>
@@ -45,8 +49,9 @@ const PostDetails = (): JSX.Element => {
             <StyledLikesContainer>
               <StyledIconUpVote
                 onClick={async () => {
+                  if (!user) return;
                   if (!handlePlusOne) return;
-                  await handlePlusOne(data._id as string, {
+                  await handlePlusOne(data._id as string, user, {
                     numberOfLikes: data.numberOfLikes + 1,
                   });
                   getSinglePost(id as string);
@@ -56,8 +61,9 @@ const PostDetails = (): JSX.Element => {
               </StyledIconUpVote>
               <StyledIconDownVote
                 onClick={async () => {
+                  if (!user) return;
                   if (!handleMinusOne) return;
-                  await handleMinusOne(data._id as string, {
+                  await handleMinusOne(data._id as string, user, {
                     numberOfLikes: data.numberOfLikes - 1,
                   });
 
@@ -67,9 +73,7 @@ const PostDetails = (): JSX.Element => {
                 <FontAwesomeIcon icon={faDownLong} />
               </StyledIconDownVote>
             </StyledLikesContainer>
-            <StyledNumberOfLikesContainer>
-              {data.numberOfLikes}
-            </StyledNumberOfLikesContainer>
+            <StyledNumberOfLikesContainer>{data.numberOfLikes}</StyledNumberOfLikesContainer>
           </StyledLikesWrapper>
         </StyledCardActions>
       </StyledCard>
@@ -94,7 +98,7 @@ const PostDetails = (): JSX.Element => {
           />
         ))
       )}
-      <NewComment id={id} />
+      <NewComment id={id} user={user} />
     </div>
   );
 };
